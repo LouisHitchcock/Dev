@@ -1,0 +1,661 @@
+/* ==========================================================================
+   Site-wide components
+   Depends on css/tokens.css, which must be loaded first.
+   ========================================================================== */
+
+/* ==========================================================================
+   Header
+   --------------------------------------------------------------------------
+   Fixed and translucent so the hero photograph shows through, with a blur
+   behind it to keep the white logo and links legible over any image.
+   ========================================================================== */
+
+header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    color: var(--on-dark);
+    background: rgb(20 20 16 / 0.55);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 0.875rem var(--gutter);
+}
+
+/* --- Logo ---------------------------------------------------------------- */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.logo-icon {
+    height: 42px;
+    width: auto;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.main-title {
+    font-size: 1.0625rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--on-dark);
+}
+
+.tagline {
+    font-size: 0.75rem;
+    font-weight: 450;
+    letter-spacing: 0.01em;
+    color: var(--on-dark-muted);
+}
+
+.mobile-logo {
+    display: none;
+}
+
+.mobile-logo-icon {
+    height: 46px;
+    width: auto;
+}
+
+.mobile-tagline {
+    font-size: 0.7rem;
+    font-weight: 450;
+    letter-spacing: 0.01em;
+    color: var(--on-dark-muted);
+    text-align: center;
+    margin-top: 3px;
+}
+
+/* --- Desktop navigation -------------------------------------------------- */
+
+/* #desktop-menu is the <nav>; the list inside it does the layout */
+#desktop-menu ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    list-style: none;
+}
+
+#desktop-menu li a {
+    display: block;
+    padding: 0.5rem 0.9rem;
+    border-radius: var(--radius-pill);
+    color: var(--on-dark);
+    font-size: var(--text-sm);
+    font-weight: 550;
+    text-decoration: none;
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+#desktop-menu li a:hover {
+    background: rgb(255 255 255 / 0.14);
+}
+
+/* The active page reads as a filled pill rather than an underline */
+#desktop-menu li a.active {
+    background: var(--accent);
+    color: var(--accent-ink);
+}
+
+/* --- Hamburger and mobile menu ------------------------------------------ */
+
+.hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.12);
+    color: var(--on-dark);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 101;
+    transition: background 0.2s var(--ease);
+}
+
+.hamburger:hover {
+    background: rgb(255 255 255 / 0.22);
+}
+
+.hamburger.hidden {
+    display: none;
+}
+
+#mobile-menu {
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgb(20 20 16 / 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 0;
+    transition: top 0.45s var(--ease), opacity 0.45s var(--ease);
+}
+
+#mobile-menu.active {
+    top: 0;
+    opacity: 1;
+}
+
+#mobile-menu ul {
+    list-style: none;
+    text-align: center;
+}
+
+#mobile-menu li {
+    margin: var(--space-3) 0;
+}
+
+#mobile-menu a {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-pill);
+    color: var(--on-dark);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+#mobile-menu a:hover,
+#mobile-menu li a.active {
+    color: var(--accent);
+}
+
+.close-menu {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 0.12);
+    color: var(--on-dark);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+
+/* ==========================================================================
+   Hero
+   --------------------------------------------------------------------------
+   The photograph runs full bleed with a gradient scrim over it, rather than
+   sitting behind a translucent grey box. Height is driven by content with a
+   minimum, so nothing crops on short viewports.
+   ========================================================================== */
+
+.hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: min(84svh, 780px);
+    padding: calc(var(--space-7) + 3rem) var(--gutter) var(--space-7);
+    text-align: center;
+    background: url('../images/header.jpeg') no-repeat center center/cover;
+    isolation: isolate;
+}
+
+/* Scrim: darkest at the top behind the header, lifting towards the middle */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(to bottom,
+            rgb(16 16 12 / 0.78) 0%,
+            rgb(16 16 12 / 0.45) 38%,
+            rgb(16 16 12 / 0.55) 100%);
+}
+
+.hero .overlay {
+    max-width: 46rem;
+    color: var(--on-dark);
+}
+
+.hero h1 {
+    font-size: var(--text-hero);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 24px rgb(0 0 0 / 0.35);
+}
+
+.hero p {
+    max-width: 34rem;
+    margin: var(--space-4) auto var(--space-5);
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+    color: var(--on-dark-muted);
+}
+
+.hero-phone {
+    margin-top: var(--space-3);
+}
+
+
+/* ==========================================================================
+   Cards: services and certifications
+   ========================================================================== */
+
+.servicesContainer,
+.certContainer,
+.testimonials {
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: calc(var(--section-y) / 2) var(--gutter);
+}
+
+.servicesTitle,
+.testimonials-header,
+.certTitle {
+    max-width: var(--container-narrow);
+    margin: 0 auto var(--space-5);
+    text-align: center;
+    font-size: var(--text-3xl);
+}
+
+.servicesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-3);
+}
+
+.serviceGridItem {
+    padding: var(--space-4);
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-sm);
+    text-align: left;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.serviceGridItem:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.serviceGridItem h3 {
+    margin-bottom: var(--space-2);
+    font-size: var(--text-lg);
+}
+
+/* The service copy is written with hard line breaks in the source, which
+   pre-line preserves as separate lines. */
+.serviceGridItem p {
+    color: var(--ink-muted);
+    font-size: var(--text-sm);
+    white-space: pre-line;
+}
+
+.certGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+}
+
+.certGridItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-4);
+    border-radius: var(--radius);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+.certContainer img {
+    max-width: 168px;
+    width: 60%;
+    height: auto;
+    margin-bottom: var(--space-2);
+}
+
+.certGridItem p {
+    color: var(--ink-muted);
+    font-size: var(--text-sm);
+}
+
+
+/* ==========================================================================
+   Testimonials
+   ========================================================================== */
+
+.testimonials {
+    overflow-x: hidden;
+}
+
+/* Swiper 11 clips overflow on its own .swiper class, but this markup predates
+   that and uses .swiper-container, so the neighbouring slides need clipping
+   here or they spill past the section. Padding leaves room for the card
+   shadow, which clipping would otherwise cut off. */
+.swiper-container {
+    /* clip rather than hidden, so the card shadow is still visible above and
+       below while the neighbouring slides are cut off at the sides */
+    overflow-x: clip;
+    padding-block: var(--space-3);
+}
+
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: var(--space-5) var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--surface-card);
+    box-shadow: var(--shadow);
+    color: var(--ink);
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    text-align: center;
+    text-wrap: pretty;
+    box-sizing: border-box;
+    transition: opacity 0.6s var(--ease);
+}
+
+/* Only the active slide is visible. Hiding just prev and next left the
+   further loop slides at full opacity, which showed as a sliver at the edge.
+   Scoped to .swiper-initialized, the class Swiper adds to the container, so
+   that with JavaScript unavailable the testimonials are all still readable
+   rather than all hidden. */
+.swiper-initialized .swiper-slide {
+    opacity: 0;
+}
+
+.swiper-initialized .swiper-slide.swiper-slide-active,
+.swiper-initialized .swiper-slide.activeTestimonial {
+    opacity: 1;
+}
+
+.swiper-pagination {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+}
+
+.swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--ink-faint);
+    opacity: 0.35;
+    cursor: pointer;
+    transition: opacity 0.2s var(--ease), background 0.2s var(--ease),
+                width 0.2s var(--ease);
+}
+
+.swiper-pagination-bullet-active {
+    width: 26px;
+    background: var(--accent);
+    opacity: 1;
+}
+
+
+/* ==========================================================================
+   Contact form
+   ========================================================================== */
+
+.contactForm {
+    width: 100%;
+    max-width: 42rem;
+    margin-inline: auto;
+    padding: calc(var(--section-y) / 2) var(--gutter);
+}
+
+.contact-intro > * + * {
+    margin-top: var(--space-2);
+}
+
+.contact-title {
+    font-size: var(--text-3xl);
+    font-weight: 650;
+    text-align: center;
+}
+
+.contact-description {
+    color: var(--ink-muted);
+    text-align: center;
+    font-size: var(--text-lg);
+}
+
+.contact-form {
+    margin-top: var(--space-5);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--surface-card);
+    box-shadow: var(--shadow);
+}
+
+.form-group-container {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    margin-bottom: 0.4rem;
+    font-size: var(--text-sm);
+    font-weight: 550;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font: inherit;
+    font-size: var(--text-sm);
+    color: var(--ink);
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease),
+                background 0.2s var(--ease);
+}
+
+.form-input {
+    height: 3rem;
+}
+
+.form-textarea {
+    min-height: 8.5rem;
+    resize: vertical;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--ink-faint);
+}
+
+.form-input:hover,
+.form-textarea:hover {
+    border-color: var(--ink-faint);
+}
+
+.form-input:focus-visible,
+.form-textarea:focus-visible {
+    outline: none;
+    background: var(--surface-card);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+.form-submit {
+    width: 100%;
+    margin-top: var(--space-4);
+    padding: 0.9375rem 1.5rem;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font: inherit;
+    font-size: var(--text-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s var(--ease), transform 0.2s var(--ease),
+                box-shadow 0.2s var(--ease);
+}
+
+.form-submit:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+    padding: var(--space-6) var(--gutter) var(--space-5);
+    border-top: 1px solid var(--hairline);
+    background: var(--surface-sunken);
+    text-align: center;
+}
+
+.footer h4 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink-muted);
+}
+
+.footer p {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--ink-muted);
+}
+
+.footer a {
+    color: var(--ink);
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 0.2s var(--ease);
+}
+
+.footer a:hover {
+    color: var(--accent-hover);
+}
+
+/* Areas we cover: the machine-readable town list lives in the JSON-LD
+   areaServed, this is just a quiet human-readable echo of it. */
+.areasLine {
+    max-width: var(--container-narrow);
+    margin: var(--space-3) auto 0;
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--ink-faint);
+}
+
+.spacer {
+    padding: var(--space-3);
+}
+
+/* --- Social icons -------------------------------------------------------- */
+
+.social-icons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+}
+
+.socialIcon {
+    height: 40px;
+    width: 40px;
+    padding: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--surface-card);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.socialIcon:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+
+/* ==========================================================================
+   Small screens
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    #desktop-menu {
+        display: none;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .mobile-logo {
+        display: block;
+    }
+
+    .navbar {
+        padding: 0.625rem var(--gutter);
+    }
+
+    .hero {
+        min-height: min(76svh, 620px);
+    }
+
+    .swiper-slide {
+        font-size: var(--text-lg);
+        padding: var(--space-4) var(--space-3);
+    }
+
+    .contact-form {
+        padding: var(--space-4);
+    }
+}
